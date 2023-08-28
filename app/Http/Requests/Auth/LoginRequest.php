@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Auth;
 
 use App\Models\User;
+use App\Notifications\TwoFactorNotification;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -56,7 +57,7 @@ class LoginRequest extends FormRequest
         $user->generateCode();
 
         // Send notification via email
-        // $user->notify(new TwoFactorNotification());
+        $user->notify(new TwoFactorNotification());
 
         // Send notification via sms
         $message = "Login OTP is :" . $user->code;
